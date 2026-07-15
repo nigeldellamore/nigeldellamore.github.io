@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Nigel Dellamore] — Data Engineer</title>
+<meta name="description" content="Portfolio de [Prénom NOM], Data Engineer. Pipelines ETL, orchestration, streaming, bases NoSQL distribuées et déploiement de modèles ML.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F6F1;
+  --card:#FFFFFF;
+  --ink:#1C2530;
+  --ink-soft:#4A5568;
+  --line:#DDDAD0;
+  --run:#0E7C66;        /* vert "pipeline success" */
+  --run-soft:#E3F0EC;
+  --amber:#B97A18;      /* statut "running" */
+  --amber-soft:#F6ECDB;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'Archivo',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;font-weight:380}
+::selection{background:var(--run);color:#fff}
+
+a{color:var(--run);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:2px solid var(--run);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:880px;margin:0 auto}
+.brand{font-family:var(--mono);font-size:.85rem;font-weight:600;color:var(--ink);letter-spacing:.02em}
+.brand:hover{text-decoration:none;color:var(--run)}
+nav ul{display:flex;gap:26px;list-style:none}
+nav ul a{font-family:var(--mono);font-size:.8rem;color:var(--ink-soft)}
+nav ul a:hover{color:var(--run);text-decoration:none}
+
+/* ---------- hero ---------- */
+.hero{padding:88px 0 64px}
+.eyebrow{font-family:var(--mono);font-size:.78rem;font-weight:500;color:var(--run);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--run);box-shadow:0 0 0 4px var(--run-soft)}
+h1{font-size:clamp(2.3rem,6vw,3.6rem);font-weight:750;font-stretch:112%;line-height:1.06;letter-spacing:-.02em;max-width:16ch}
+.hero p.lede{margin-top:24px;max-width:56ch;font-size:1.08rem;color:var(--ink-soft)}
+.hero-links{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:.82rem;font-weight:500;padding:11px 18px;border:1px solid var(--ink);border-radius:4px;color:var(--ink);transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper);text-decoration:none}
+.btn.primary{background:var(--run);border-color:var(--run);color:#fff}
+.btn.primary:hover{background:#0A6653}
+
+/* ---------- section titles ---------- */
+section{padding:56px 0}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.sec-head h2{font-size:1.5rem;font-weight:700;font-stretch:110%;letter-spacing:-.01em}
+.sec-head .count{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft)}
+
+/* ---------- pipeline rail (signature) ---------- */
+.rail{position:relative;padding-left:34px}
+.rail::before{content:"";position:absolute;left:8px;top:14px;bottom:14px;width:2px;background:repeating-linear-gradient(to bottom,var(--line) 0 6px,transparent 6px 12px)}
+.run-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px 26px;margin-bottom:22px;transition:border-color .15s,box-shadow .15s;cursor:pointer}
+.run-card:hover{border-color:var(--run);box-shadow:0 4px 18px rgba(14,124,102,.08)}
+.run-card::before{content:"";position:absolute;left:-33px;top:28px;width:12px;height:12px;border-radius:50%;background:var(--run);border:3px solid var(--paper);box-shadow:0 0 0 2px var(--run)}
+.run-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.run-id{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft)}
+.badge{font-family:var(--mono);font-size:.68rem;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.04em}
+.badge.ok{background:var(--run-soft);color:var(--run)}
+.badge.poc{background:var(--amber-soft);color:var(--amber)}
+.run-card h3{font-size:1.22rem;font-weight:680;font-stretch:106%;letter-spacing:-.01em;margin-bottom:8px}
+.run-card p{color:var(--ink-soft);font-size:.96rem;max-width:62ch}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.tag{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:3px 8px}
+.open-hint{font-family:var(--mono);font-size:.74rem;color:var(--run);margin-top:14px;display:inline-block}
+
+/* ---------- case study (detail view) ---------- */
+.case{display:none}
+.case.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.case.active{animation:none}html{scroll-behavior:auto}}
+.back{font-family:var(--mono);font-size:.8rem;display:inline-block;margin:36px 0 8px}
+.case h1{font-size:clamp(1.7rem,4.5vw,2.5rem);margin-top:8px}
+.case .meta{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 6px}
+.case h2{font-size:1.15rem;font-weight:680;margin:40px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+.case p{margin-bottom:14px;max-width:68ch;color:var(--ink)}
+.case ul{margin:0 0 14px 20px;max-width:66ch}
+.case li{margin-bottom:6px}
+.case pre{font-family:var(--mono);font-size:.78rem;line-height:1.5;background:var(--ink);color:#DDE6E3;border-radius:8px;padding:20px 22px;overflow-x:auto;margin:16px 0}
+.case table{border-collapse:collapse;font-size:.9rem;margin:12px 0 18px}
+.case th,.case td{border:1px solid var(--line);padding:7px 14px;text-align:left}
+.case th{font-family:var(--mono);font-size:.72rem;font-weight:600;background:var(--card)}
+.kpi{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0}
+.kpi div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 20px}
+.kpi b{display:block;font-size:1.3rem;font-weight:720;color:var(--run)}
+.kpi span{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft)}
+
+/* ---------- skills / about ---------- */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px 22px}
+.skill h3{font-family:var(--mono);font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--run);margin-bottom:10px}
+.skill p{font-size:.92rem;color:var(--ink-soft)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:36px 0 48px;margin-top:40px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-family:var(--mono);font-size:.78rem;color:var(--ink-soft)}
+@media(max-width:600px){.rail{padding-left:26px}.run-card::before{left:-25px}}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="#home" onclick="goHome()">[Nigel Dellamore] · data engineer</a>
+    <ul>
+      <li><a href="#projets" onclick="goHome()">Projets</a></li>
+      <li><a href="#competences" onclick="goHome()">Compétences</a></li>
+      <li><a href="#contact" onclick="goHome()">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ==================== ACCUEIL ==================== -->
+<main id="view-home">
+  <div class="wrap">
+
+    <section class="hero" id="home">
+      <div class="eyebrow">disponible · [ville, pays]</div>
+      <h1>Des données brutes aux pipelines qui tournent tout seuls.</h1>
+      <p class="lede">Je suis [Prénom NOM], Data Engineer. Je conçois des pipelines de données de bout en bout — ingestion, CDC et streaming, lakehouse, orchestration, jusqu'aux systèmes RAG — avec un soin particulier pour la qualité des données, les tests, le monitoring et la conteneurisation. Formé au métier via un cursus intensif de Data Engineering ([nom de la formation]), projets à l'appui ci-dessous.</p>
+      <div class="hero-links">
+        <a class="btn primary" href="#projets">Voir les projets</a>
+        <a class="btn" href="https://github.com/nigeldellamore66-crypto" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="[www.linkedin.com/in/nigel-dellamore-742814293]" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </section>
+
+    <section id="projets">
+      <div class="sec-head"><h2>Projets</h2><span class="count">9 runs · tous reproductibles via Docker ou notebook</span></div>
+      <div class="rail">
+
+        <article class="run-card" onclick="openCase('sport')">
+          <div class="run-top"><span class="run-id">run #01</span><span class="badge ok">END-TO-END · 11 SERVICES</span></div>
+          <h3>Plateforme data avantages sportifs — CDC · Lakehouse · Streaming & Batch</h3>
+          <p>Pipeline complet calculant automatiquement les avantages sportifs de 161 salariés : capture temps réel des changements (Debezium CDC), notifications Slack en streaming, lakehouse médaillon Delta orchestré par Airflow, tests Great Expectations, monitoring Grafana et restitution Power BI.</p>
+          <div class="tags"><span class="tag">Debezium</span><span class="tag">Redpanda</span><span class="tag">Spark</span><span class="tag">Delta Lake</span><span class="tag">Airflow</span><span class="tag">Great Expectations</span><span class="tag">Grafana</span><span class="tag">Power BI</span></div>
+          <span class="open-hint">→ lire l'étude de cas</span>
+        </article>
+
+        <article class="run-card" onclick="openCase('ragmvp')">
+          <div class="run-top"><span class="run-id">run #02</span><span class="badge ok">MVP ÉVALUÉ (RAGAS)</span></div>
+          <h3>Assistant RAG événements culturels — du POC au MVP</h3>
+          <p>Transformation d'un POC de chatbot RAG en MVP scalable : filtrage géographique et temporel natif dans Qdrant, mémoire conversationnelle, agent web de secours, monitoring temps réel — avec une faithfulness qui passe de 0,41 à 0,79 mesurée par RAGAS.</p>
+          <div class="tags"><span class="tag">Mistral AI</span><span class="tag">Qdrant</span><span class="tag">LangChain</span><span class="tag">RAGAS</span><span class="tag">Streamlit</span><span class="tag">Docker</span></div>
+          <span class="open-hint">→ lire l'étude de cas</span>
+        </article>
+
+        <article class="run-card" onclick="openCase('ragpoc')">
+          <div class="run-top"><span class="run-id">run #03</span><span class="badge poc">POC VALIDÉ</span></div>
+          <h3>Chatbot RAG Puls-Events — preuve de faisabilité</h3>
+          <p>Premier système RAG interrogeant en langage naturel le catalogue OpenAgenda des événements d'Île-de-France : index vectoriel FAISS, chaîne LangChain + Mistral, évaluation RAGAS — et des limites identifiées qui ont directement guidé l'architecture du MVP.</p>
+          <div class="tags"><span class="tag">Mistral AI</span><span class="tag">FAISS</span><span class="tag">LangChain</span><span class="tag">RAGAS</span><span class="tag">Pytest</span></div>
+          <span class="open-hint">→ lire l'étude de cas</span>
+        </article>
+
+        <article class="run-card" onclick="openCase('meteo')">
+          <div class="run-top"><span class="run-id">run #04</span><span class="badge ok">PRODUCTION-READY</span></div>
+          <h3>Pipeline ETL météo multi-sources — Airbyte · S3 · MongoDB</h3>
+          <p>Collecte de données de stations météo hétérogènes (JSON, Excel), stockage brut sur S3, normalisation avec contrôles qualité automatisés, et ingestion dans MongoDB pour alimenter des modèles de prévision de demande électrique.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Airbyte</span><span class="tag">AWS S3</span><span class="tag">MongoDB</span><span class="tag">Pytest</span><span class="tag">Docker</span></div>
+          <span class="open-hint">→ lire l'étude de cas</span>
+        </article>
+
+        <article class="run-card" onclick="openCase('kestra')">
+          <div class="run-top"><span class="run-id">run #05</span><span class="badge ok">PRODUCTION-READY</span></div>
+          <h3>Orchestration d'un pipeline analytique — Kestra · DuckDB</h3>
+          <p>Automatisation complète du nettoyage, de la fusion et de l'analyse de données commerciales multi-sources (ERP, web, liaison), avec génération planifiée de rapports de chiffre d'affaires et classification statistique des produits.</p>
+          <div class="tags"><span class="tag">Kestra</span><span class="tag">DuckDB</span><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Docker</span></div>
+          <span class="open-hint">→ lire l'étude de cas</span>
+        </article>
+
+        <article class="run-card" onclick="openCase('streaming')">
+          <div class="run-top"><span class="run-id">run #06</span><span class="badge poc">POC VALIDÉ</span></div>
+          <h3>Pipeline streaming temps réel — Redpanda · Spark · Parquet</h3>
+          <p>Ingestion de tickets clients en temps réel via Kafka (Redpanda), traitement par Spark Structured Streaming avec enrichissement métier, tolérance aux pannes par checkpoints et stockage Parquet pour l'analyse batch.</p>
+          <div class="tags"><span class="tag">Apache Spark</span><span class="tag">Kafka / Redpanda</span><span class="tag">Parquet</span><span class="tag">Python</span><span class="tag">Docker</span></div>
+          <span class="open-hint">→ lire l'étude de cas · démo vidéo</span>
+        </article>
+
+        <article class="run-card" onclick="openCase('sante')">
+          <div class="run-top"><span class="run-id">run #07</span><span class="badge ok">PRODUCTION-READY</span></div>
+          <h3>Migration de données de santé vers MongoDB — Docker</h3>
+          <p>Application conteneurisée de migration CSV/JSON vers MongoDB : validation par schéma explicite, séparation des rôles utilisateurs, sauvegardes planifiées et tests Pytest sur base dédiée. Conçue pour être réutilisable sur d'autres datasets.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">MongoDB</span><span class="tag">Docker Compose</span><span class="tag">Pytest</span><span class="tag">Pandas</span></div>
+          <span class="open-hint">→ lire l'étude de cas</span>
+        </article>
+
+        <article class="run-card" onclick="openCase('sharding')">
+          <div class="run-top"><span class="run-id">run #08</span><span class="badge ok">ARCHITECTURE DISTRIBUÉE</span></div>
+          <h3>Cluster MongoDB distribué — ReplicaSet · Sharding · Power BI</h3>
+          <p>Conception d'une base NoSQL distribuée sur 95 885 annonces Airbnb (Paris + Lyon) : réplication haute disponibilité, sharding géographique par ville, analyses Polars et exposition des données dans Power BI via le BI Connector.</p>
+          <div class="tags"><span class="tag">MongoDB</span><span class="tag">Polars</span><span class="tag">Power BI</span><span class="tag">Python</span></div>
+          <span class="open-hint">→ lire l'étude de cas</span>
+        </article>
+
+        <article class="run-card" onclick="openCase('ml')">
+          <div class="run-top"><span class="run-id">run #09</span><span class="badge ok">API DÉPLOYABLE</span></div>
+          <h3>Prédiction de consommation énergétique — Random Forest · BentoML</h3>
+          <p>Pipeline ML complet sur les données open data de Seattle : exploration, feature engineering, comparaison de modèles en validation croisée (R² 0,82), puis exposition du modèle retenu via une API REST BentoML documentée par Swagger.</p>
+          <div class="tags"><span class="tag">Scikit-learn</span><span class="tag">BentoML</span><span class="tag">Pandas</span><span class="tag">Poetry</span></div>
+          <span class="open-hint">→ lire l'étude de cas</span>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="competences">
+      <div class="sec-head"><h2>Compétences</h2><span class="count">acquises et démontrées en projet</span></div>
+      <div class="grid2">
+        <div class="skill"><h3>Ingestion & ETL</h3><p>Airbyte, pipelines Python, normalisation multi-formats (JSON, Excel, CSV), idempotence, contrôles qualité en entrée et en sortie.</p></div>
+        <div class="skill"><h3>Orchestration</h3><p>Airflow (DAGs, SparkSubmitOperator), Kestra (triggers, retry, parallélisme), Docker Compose multi-services.</p></div>
+        <div class="skill"><h3>CDC & Lakehouse</h3><p>Debezium (capture du WAL Postgres), architecture médaillon bronze/silver/gold, Delta Lake sur MinIO, idempotence, time travel.</p></div>
+        <div class="skill"><h3>IA générative & RAG</h3><p>LangChain, Mistral AI, bases vectorielles (Qdrant, FAISS), filtres natifs pré-recherche, agents web de secours, évaluation RAGAS.</p></div>
+        <div class="skill"><h3>Streaming</h3><p>Kafka / Redpanda, Spark Structured Streaming, schémas explicites, checkpoints et tolérance aux pannes, stockage Parquet.</p></div>
+        <div class="skill"><h3>Bases de données</h3><p>MongoDB (ReplicaSet, sharding, rôles et sécurité), SQL analytique avec DuckDB, modélisation orientée document.</p></div>
+        <div class="skill"><h3>Qualité & Monitoring</h3><p>Great Expectations, Pytest (dont mocks AWS), contrôles avant/après transformation, Prometheus + Grafana, dashboards de suivi.</p></div>
+        <div class="skill"><h3>Cloud & DevOps</h3><p>AWS S3, MinIO, conteneurisation Docker (stacks jusqu'à 11 services), environnements isolés et reproductibles, gestion des secrets par variables d'environnement.</p></div>
+        <div class="skill"><h3>ML & exposition</h3><p>Scikit-learn, validation croisée, feature engineering, serving de modèles via API REST BentoML, restitution BI avec Power BI.</p></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="sec-head"><h2>Contact</h2></div>
+      <p>Je suis ouvert aux opportunités de Data Engineer. Le moyen le plus simple de me joindre : <a href="mailto:[email]">[email]</a> ou <a href="[lien LinkedIn]">LinkedIn</a>. Tous les projets ci-dessus sont documentés et reproductibles — les dépôts sont sur <a href="https://github.com/nigeldellamore66-crypto">GitHub</a>.</p>
+    </section>
+
+  </div>
+</main>
+
+<!-- ==================== ÉTUDES DE CAS ==================== -->
+<div class="wrap">
+
+<article class="case" id="case-sport">
+  <a class="back" href="#projets" onclick="goHome()">← retour aux projets</a>
+  <div class="eyebrow">run #01 · plateforme end-to-end</div>
+  <h1>Plateforme data des avantages sportifs</h1>
+  <div class="meta"><span class="tag">PostgreSQL</span><span class="tag">Debezium</span><span class="tag">Redpanda</span><span class="tag">Spark</span><span class="tag">Delta Lake · MinIO</span><span class="tag">Airflow</span><span class="tag">Great Expectations</span><span class="tag">Prometheus · Grafana</span><span class="tag">Power BI</span></div>
+
+  <h2>Le problème</h2>
+  <p>Sport Data Solution veut récompenser l'activité physique de ses salariés selon deux règles métier : une prime mobilité de 5 % du salaire brut si le trajet domicile-bureau est réalisable activement (≤ 15 km à pied, ≤ 25 km à vélo), et 5 jours de congé bien-être à partir de 15 activités sportives déclarées sur 12 mois. Calculer ça à la main pour toute l'entreprise est ingérable — il faut une chaîne data complète, du signal brut jusqu'au tableau de bord RH.</p>
+
+  <h2>L'architecture</h2>
+  <pre>
+Postgres (RH + activités)
+    │
+    │  Debezium CDC — lecture du WAL (pgoutput)
+    ▼
+Redpanda (topics : cdc.hr.employees, cdc.ops.activities)
+    │
+    ├──► Spark Streaming ──► Slack   (notification à chaque activité)
+    │
+    └──► Spark Batch ──► MinIO / Delta Lake ──► Postgres analytics ──► Power BI
+                         bronze → silver → gold
+                              ▲
+                              └── Google Maps API (géocodage + distances)
+
+Orchestration : Airflow (DAG quotidien  bronze >> silver >> gold)
+Qualité       : Great Expectations (conteneur dédié, 5 expectations)
+Monitoring    : Prometheus + Grafana</pre>
+  <p>Deux flux complémentaires cohabitent : le temps réel (un INSERT en base est capté par Debezium, publié sur Redpanda et notifié dans Slack en quelques secondes) et le batch quotidien qui raffine la donnée à travers l'architecture médaillon. Principe structurant : l'historique vit dans Delta/MinIO (source de vérité, time travel), tandis que Postgres analytics ne porte que le dernier état pour la BI.</p>
+
+  <div class="kpi">
+    <div><b>161</b><span>salariés traités, 100 % géocodés</span></div>
+    <div><b>255 780 €</b><span>coût annuel calculé (3,2 % masse salariale)</span></div>
+    <div><b>11</b><span>services Docker Compose</span></div>
+    <div><b>5/5</b><span>expectations qualité validées</span></div>
+  </div>
+
+  <h2>Points clés</h2>
+  <ul>
+    <li><strong>CDC plutôt que polling</strong> — Debezium lit le WAL de Postgres : aucune charge sur la base source, aucun événement perdu.</li>
+    <li><strong>Idempotence de bout en bout</strong> — Delta utilise <code>replaceWhere</code> par date de snapshot, l'export Postgres écrase et tronque : rejouer le pipeline produit exactement le même résultat.</li>
+    <li><strong>Règles métier externalisées</strong> — taux de prime, seuils et distances vivent dans une table de paramètres : modifier le taux à 8 % et relancer le DAG suffit à tout recalculer, sans toucher au code.</li>
+    <li><strong>Qualité conteneurisée</strong> — les 5 expectations (volumétrie, bornes de coûts et de salaires, référentiel des services, intégrité des clés) tournent dans un conteneur dédié, reproductible partout.</li>
+    <li><strong>Monitoring pragmatique</strong> — Redpanda n'expose pas nativement le lag consumer ; le dashboard Grafana surveille donc le débit produce/consume et le nombre de consumers actifs, métriques réellement disponibles et tout aussi révélatrices.</li>
+  </ul>
+
+  <h2>Ce que j'en retiens</h2>
+  <p>C'est le projet qui assemble tout : capture, streaming, lakehouse, orchestration, qualité, monitoring, restitution. La leçon principale est architecturale — séparer la source de vérité (Delta, historisée) de la couche de service (Postgres, dernier état) clarifie les responsabilités et évite qu'un besoin BI ne dicte la structure du lakehouse. Et l'idempotence n'est pas un luxe : c'est ce qui permet de relancer un pipeline un dimanche soir sans transpirer.</p>
+  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-Infrastructure-Sport" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+</article>
+
+<article class="case" id="case-ragmvp">
+  <a class="back" href="#projets" onclick="goHome()">← retour aux projets</a>
+  <div class="eyebrow">run #02 · rag en production</div>
+  <h1>Assistant RAG Puls-Events — du POC au MVP</h1>
+  <div class="meta"><span class="tag">Mistral AI</span><span class="tag">Qdrant</span><span class="tag">LangChain</span><span class="tag">RAGAS</span><span class="tag">smolagents · Tavily</span><span class="tag">Streamlit</span><span class="tag">Docker</span></div>
+
+  <h2>Le problème</h2>
+  <p>Le <a href="#p-ragpoc" onclick="openCase('ragpoc');return false;">POC</a> avait prouvé la faisabilité d'un chatbot événementiel RAG, mais avec des limites bloquantes pour un vrai produit : pas de filtrage natif par date, pas de contexte géographique, pas de mémoire de conversation, et des hallucinations occasionnelles. L'objectif du MVP : corriger ces limites structurellement — pas par des rustines — et le prouver par des métriques.</p>
+
+  <h2>L'architecture</h2>
+  <pre>
+Utilisateur (Streamlit)
+      │
+      ▼
+Détection localisation (IP + sidebar, repli ville → région)
+      │
+      ▼
+Retriever intelligent ──► détection critères temporels / géo
+      │                         │
+      │                         ▼
+      │                 Filtres natifs Qdrant (Range + MatchValue)
+      ▼
+Base vectorielle Qdrant ◄── Mistral Embeddings
+      │
+      ▼
+Contexte trouvé ? ──non──► Agent web (smolagents + Tavily)
+      │ oui
+      ▼
+Mistral LLM ──► réponse en streaming
+      │
+      ▼
+Monitoring SQLite + feedback utilisateur (dashboard dédié)</pre>
+
+  <h2>Le changement décisif</h2>
+  <p>Dans le POC, le filtrage par date se faisait en Python, en amont de la recherche vectorielle — fragile et coûteux. Dans le MVP, les filtres temporels et géographiques sont exécutés <em>nativement par Qdrant, avant la recherche vectorielle</em>. Le retriever ne voit que des candidats déjà pertinents, ce qui explique en grande partie le bond des métriques.</p>
+
+  <div class="kpi">
+    <div><b>0,41 → 0,79</b><span>faithfulness (RAGAS)</span></div>
+    <div><b>0,14 → 0,80</b><span>context recall</span></div>
+    <div><b>0,32 → 0,57</b><span>answer correctness</span></div>
+  </div>
+  <p>Évaluation menée sur 30 questions fermées construites depuis des chunks réels de la base — le même protocole avant/après, pour une comparaison honnête.</p>
+
+  <h2>Points clés</h2>
+  <ul>
+    <li>Mémoire conversationnelle : « et à Versailles ? » fonctionne sans répéter le contexte.</li>
+    <li>Recherche web de secours (agent smolagents + Tavily) quand la base locale ne trouve rien — le chatbot ne répond jamais « je ne sais pas » sans avoir essayé.</li>
+    <li>Monitoring temps réel : taux d'échec, latence et feedback utilisateur dans un dashboard dédié.</li>
+    <li>Limites assumées et documentées : sessions en mémoire (Redis prévu), monitoring SQLite (PostgreSQL au-delà d'une instance), indexation nationale nécessitant un cluster Qdrant.</li>
+  </ul>
+
+  <h2>Ce que j'en retiens</h2>
+  <p>La différence entre un POC et un MVP n'est pas la quantité de features, c'est la mesure. Mettre en place RAGAS d'abord, puis architecturer pour faire monter les métriques, transforme des choix techniques (« filtres natifs ou post-traitement ? ») en décisions objectivables. Documenter les limites restantes fait aussi partie du travail : un MVP honnête vaut mieux qu'une démo qui promet trop.</p>
+  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-MVP-RAG" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+</article>
+
+<article class="case" id="case-ragpoc">
+  <a class="back" href="#projets" onclick="goHome()">← retour aux projets</a>
+  <div class="eyebrow">run #03 · proof of concept</div>
+  <h1>Chatbot RAG Puls-Events — preuve de faisabilité</h1>
+  <div class="meta"><span class="tag">Mistral AI</span><span class="tag">FAISS</span><span class="tag">LangChain</span><span class="tag">RAGAS</span><span class="tag">Streamlit</span><span class="tag">Pytest</span></div>
+
+  <h2>Le problème</h2>
+  <p>Puls-Events veut savoir si un chatbot peut répondre en langage naturel à des questions sur les événements culturels d'Île-de-France, en s'appuyant sur les données réelles d'OpenAgenda (via OpenDataSoft) — avec des réponses ancrées dans les données, pas inventées. Mission du POC : démontrer la faisabilité et poser une base d'évaluation.</p>
+
+  <h2>Le pipeline</h2>
+  <ul>
+    <li><strong>Ingestion</strong> — récupération des événements via l'API OpenDataSoft, nettoyage du HTML avec BeautifulSoup.</li>
+    <li><strong>Vectorisation</strong> — découpage en chunks et index FAISS avec les embeddings Mistral.</li>
+    <li><strong>Génération</strong> — chaîne LangChain orchestrant le retriever et le LLM Mistral, interface Streamlit.</li>
+    <li><strong>Évaluation</strong> — dataset d'évaluation enrichi automatiquement (contexte + réponse) et mesuré avec RAGAS ; tests unitaires Pytest sur la couche données.</li>
+  </ul>
+
+  <h2>Les limites — et pourquoi elles comptent</h2>
+  <ul>
+    <li>L'API limite les résultats à 10 000 événements.</li>
+    <li>Des hallucinations occasionnelles persistent malgré <code>temperature=0</code>.</li>
+    <li>La recherche sémantique ne filtre pas nativement par date — contournement par filtrage Python en amont.</li>
+  </ul>
+  <p>Ces limites, mesurées plutôt que découvertes par surprise, ont directement dicté l'architecture du <a href="#p-ragmvp" onclick="openCase('ragmvp');return false;">MVP</a> : migration de FAISS vers Qdrant précisément pour obtenir un filtrage natif temporel et géographique.</p>
+
+  <h2>Ce que j'en retiens</h2>
+  <p>Un bon POC ne sert pas à impressionner, il sert à apprendre : sa vraie livraison, ce sont les limites identifiées et le protocole d'évaluation. Avoir mis RAGAS en place dès cette phase a permis, au moment du MVP, de prouver chiffres à l'appui que les choix d'architecture amélioraient réellement le système.</p>
+  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-RAG-System" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+</article>
+
+<article class="case" id="case-meteo">
+  <a class="back" href="#projets" onclick="goHome()">← retour aux projets</a>
+  <div class="eyebrow">run #04 · pipeline ETL</div>
+  <h1>Pipeline ETL météo multi-sources</h1>
+  <div class="meta"><span class="tag">Python</span><span class="tag">Airbyte</span><span class="tag">AWS S3</span><span class="tag">MongoDB</span><span class="tag">Pytest</span><span class="tag">Docker</span></div>
+
+  <h2>Le problème</h2>
+  <p>GreenAndCoop, fournisseur d'électricité coopératif, veut améliorer ses modèles de prévision de la demande en intégrant de nouvelles sources météo : des stations semi-professionnelles (InfoClimat) et des stations amateurs (Weather Underground). Problème : chaque source a son propre format (JSON, Excel), ses propres unités (impériales côté Weather Underground) et son propre schéma. Il faut un pipeline fiable qui rende tout ça exploitable.</p>
+
+  <h2>L'architecture</h2>
+  <pre>
+Stations météo (InfoClimat / Weather Underground)
+        │
+        ▼
+    [Airbyte]     collecte multi-sources (Excel, JSON)
+        │
+        ▼
+  [Amazon S3]     zone brute  — raw/
+        │
+        ▼
+  [Script ETL]    normalisation, conversion d'unités,
+        │         contrôles qualité (validate_raw / validate_processed)
+        ▼
+  [Amazon S3]     zone transformée — processed/ (JSONL)
+        │
+        ▼
+  [Script MIG]    migration vers MongoDB
+        │
+        ▼
+   [MongoDB]      collections measurements + stations</pre>
+  <p>Le choix d'une zone brute <em>et</em> d'une zone transformée sur S3 n'est pas cosmétique : il permet de rejouer les transformations sans re-collecter, et de tracer chaque anomalie jusqu'à sa donnée d'origine.</p>
+
+  <h2>Ce que j'ai construit</h2>
+  <ul>
+    <li>Configuration d'Airbyte pour la collecte des trois sources hétérogènes vers S3.</li>
+    <li>Script ETL Python : harmonisation des schémas en deux modèles cibles (<code>measurements</code> et <code>stations</code>), conversion des unités impériales vers le système métrique.</li>
+    <li>Contrôles qualité générés à chaque exécution, avant et après transformation, sous forme de rapports.</li>
+    <li>Suite de tests Pytest couvrant l'extraction S3 (mocks AWS), les transformations et le pipeline end-to-end.</li>
+    <li>Orchestration ETL puis migration vers MongoDB via Docker Compose : un <code>docker compose up -d</code> suffit.</li>
+  </ul>
+
+  <h2>Ce que j'en retiens</h2>
+  <p>La vraie difficulté d'un pipeline multi-sources n'est pas technique, elle est sémantique : trois stations qui mesurent « le vent » ne mesurent pas la même chose dans les mêmes unités. Définir un schéma cible unique tôt dans le projet, et valider les données contre ce schéma avant <em>et</em> après transformation, m'a évité de découvrir les incohérences au moment de l'analyse — c'est-à-dire trop tard.</p>
+  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-Pipeline-ETL-meteo" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+</article>
+
+<article class="case" id="case-kestra">
+  <a class="back" href="#projets" onclick="goHome()">← retour aux projets</a>
+  <div class="eyebrow">run #05 · orchestration</div>
+  <h1>Orchestration d'un pipeline analytique avec Kestra</h1>
+  <div class="meta"><span class="tag">Kestra</span><span class="tag">DuckDB</span><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Docker</span></div>
+
+  <h2>Le problème</h2>
+  <p>L'entreprise Bottleneck (négoce de vins) reçoit ses données de ventes de trois sources : un ERP, une boutique web, et un fichier de liaison entre les deux. Chaque mois, quelqu'un doit nettoyer, dédoublonner, fusionner et analyser ces fichiers à la main pour produire un rapport de chiffre d'affaires. L'objectif : automatiser entièrement ce processus, avec une exécution planifiée et une gestion d'erreurs digne de la production.</p>
+
+  <h2>Le pipeline</h2>
+  <ul>
+    <li><strong>Ingestion</strong> — conversion des fichiers XLSX en CSV via Python.</li>
+    <li><strong>Nettoyage & fusion</strong> — requêtes DuckDB directement sur fichiers : dédoublonnage de chaque source, puis fusion des trois tables par jointure.</li>
+    <li><strong>Analyse</strong> — calcul du CA par produit et du CA total en SQL ; classification des vins par z-score en Python pour repérer les prix atypiques.</li>
+    <li><strong>Restitution</strong> — export automatique d'un rapport Excel multi-feuilles (openpyxl).</li>
+    <li><strong>Orchestration</strong> — flux Kestra combinant tâches séquentielles et parallèles, trigger temporel, retry automatique et remontée d'erreurs à chaque étape, avec des tests de validation intermédiaires.</li>
+  </ul>
+
+  <h2>Pourquoi DuckDB ?</h2>
+  <p>Pour des volumes mensuels de cette taille, déployer un entrepôt de données serait disproportionné. DuckDB permet d'écrire du SQL analytique performant directement sur les fichiers, sans serveur à maintenir — le bon outil pour la bonne échelle.</p>
+
+  <h2>Ce que j'en retiens</h2>
+  <p>Les tests de validation intermédiaires entre les tâches du flux sont ce qui distingue un script automatisé d'un pipeline fiable : une erreur détectée à l'étape de dédoublonnage coûte quelques secondes ; la même erreur découverte dans le rapport final envoyé aux équipes coûte la confiance dans tout le pipeline.</p>
+  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-Orchestration-Flux-Kestra-Python-DuckDB" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+</article>
+
+<article class="case" id="case-streaming">
+  <a class="back" href="#projets" onclick="goHome()">← retour aux projets</a>
+  <div class="eyebrow">run #06 · streaming temps réel</div>
+  <h1>Pipeline streaming de tickets clients</h1>
+  <div class="meta"><span class="tag">Apache Spark</span><span class="tag">Kafka / Redpanda</span><span class="tag">Parquet</span><span class="tag">Python</span><span class="tag">Docker</span></div>
+
+  <h2>Le problème</h2>
+  <p>Démontrer, par un proof of concept, qu'un flux de tickets clients peut être traité en temps réel : chaque ticket doit être enrichi (assignation automatique à une équipe support selon son type) et stocké dans un format exploitable pour l'analyse batch, le tout avec une reprise sur panne sans perte ni doublon.</p>
+
+  <h2>L'architecture</h2>
+  <pre>
+[Producer Python] ──JSON──▶ [Redpanda · topic client-tickets]
+                                      │
+                                      ▼
+                      [Spark Structured Streaming]
+                        ├── parsing JSON + schéma explicite
+                        ├── logique métier : assignation équipe
+                        ├──▶ [Parquet]      /output/parquet/
+                        └──▶ [Checkpoints]  /output/checkpoints/</pre>
+
+  <h2>Points clés</h2>
+  <ul>
+    <li>Schéma explicite appliqué au parsing des messages — pas d'inférence silencieuse qui casserait en production.</li>
+    <li>Tolérance aux pannes via les checkpoints Spark : les offsets Kafka consommés sont persistés, garantissant la reprise automatique sans retraitement.</li>
+    <li>Job batch séparé (<code>spark_insight.py</code>) qui agrège les Parquet produits — illustration du pattern streaming pour l'ingestion, batch pour l'analyse.</li>
+    <li>Infrastructure complète (Redpanda, producteur, consommateur Spark) en un seul <code>docker compose up -d</code>.</li>
+  </ul>
+  <p>Une démonstration vidéo du pipeline en fonctionnement est disponible : <a href="https://youtu.be/YojvKA2PAgw" target="_blank" rel="noopener">voir la démo</a>.</p>
+
+  <h2>Ce que j'en retiens</h2>
+  <p>En streaming, la question n'est pas « est-ce que ça marche ? » mais « qu'est-ce qui se passe quand ça s'arrête ? ». Comprendre concrètement le rôle des checkpoints — et le vérifier en tuant le consommateur en pleine exécution — m'a appris plus sur les garanties de livraison que n'importe quelle documentation.</p>
+  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-redpanda-spark-ticket" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+</article>
+
+<article class="case" id="case-sante">
+  <a class="back" href="#projets" onclick="goHome()">← retour aux projets</a>
+  <div class="eyebrow">run #07 · migration & sécurité</div>
+  <h1>Migration de données de santé vers MongoDB</h1>
+  <div class="meta"><span class="tag">Python</span><span class="tag">MongoDB</span><span class="tag">Docker Compose</span><span class="tag">Pytest</span><span class="tag">Pandas</span></div>
+
+  <h2>Le problème</h2>
+  <p>Migrer des données d'hospitalisation de patients depuis des fichiers CSV vers MongoDB — un contexte où l'on ne peut se permettre ni perte de données, ni accès trop permissifs. Le pipeline devait aussi être réutilisable : changer de dataset ne doit demander que la modification du schéma de validation et de la configuration.</p>
+
+  <h2>L'architecture</h2>
+  <pre>
+docker-compose.yml
+ ├── [mongo]       base MongoDB, utilisateurs initialisés
+ ├── [migration]   loader → validation → insertion par batch
+ ├── [backup]      dump toutes les 2 h, rétention 3 jours
+ └── [mongo_test]  base dédiée aux tests Pytest (profil run-tests)</pre>
+
+  <h2>Points clés</h2>
+  <ul>
+    <li><strong>Moindre privilège</strong> — le compte <code>root</code> ne sert qu'à l'initialisation ; l'application utilise un compte <code>readWrite</code> limité à sa seule base.</li>
+    <li><strong>Validation par schéma explicite</strong> — contrôle d'intégrité avant insertion, doublons ignorés, vérification post-import.</li>
+    <li><strong>Code modulaire</strong> — séparation <code>loader</code> / <code>validation</code> / <code>pipeline</code> / <code>db</code>, ce qui rend le pipeline adaptable à d'autres formats.</li>
+    <li><strong>Tests isolés</strong> — Pytest s'exécute contre un conteneur MongoDB dédié, jamais contre la base cible.</li>
+    <li><strong>Sauvegardes planifiées</strong> — conteneur de backup avec dump automatique et politique de rétention.</li>
+  </ul>
+
+  <h2>Ce que j'en retiens</h2>
+  <p>Sur des données sensibles, la sécurité n'est pas une couche qu'on ajoute à la fin : la séparation des rôles utilisateurs et l'isolation des environnements de test doivent être présentes dès le premier <code>docker compose up</code>. C'est aussi le projet qui m'a appris à concevoir pour la réutilisabilité — le pipeline a été pensé comme un outil, pas comme un script jetable.</p>
+  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-Migration-MongoDB" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+</article>
+
+<article class="case" id="case-sharding">
+  <a class="back" href="#projets" onclick="goHome()">← retour aux projets</a>
+  <div class="eyebrow">run #08 · nosql distribué</div>
+  <h1>Cluster MongoDB distribué sur données Airbnb</h1>
+  <div class="meta"><span class="tag">MongoDB</span><span class="tag">Polars</span><span class="tag">Power BI</span><span class="tag">Python</span></div>
+
+  <h2>Le problème</h2>
+  <p>Concevoir une base NoSQL capable de servir 95 885 annonces Airbnb (Paris + Lyon, 74 champs par document) avec haute disponibilité et répartition géographique de la donnée — puis prouver que cette base peut alimenter à la fois des analyses Python et un outil de BI d'entreprise.</p>
+
+  <h2>L'architecture</h2>
+  <pre>
+        ┌────────────────┐      ┌────────────────┐
+        │  rs0 — Lyon    │      │  rs1 — Paris   │
+        │  Primary       │      │  Primary       │
+        │  Secondary     │      │  Secondary     │
+        │  Arbitre       │      │                │
+        └───────┬────────┘      └───────┬────────┘
+                └─────────┬─────────────┘
+                          ▼
+                  [Config Server]
+                          │
+                          ▼
+                  [mongos router]
+            shard key : city_name + _id
+                          │
+                          ▼
+         [Power BI]  via ODBC + BI Connector</pre>
+
+  <h2>Points clés</h2>
+  <ul>
+    <li><strong>Pourquoi le document ?</strong> Un logement = un document. Données hétérogènes et évolutives, lecture sans jointure, ajout de champs sans migration.</li>
+    <li><strong>ReplicaSet</strong> — deux ReplicaSets (dont un avec arbitre), avec test concret de la réplication et du failover.</li>
+    <li><strong>Sharding géographique</strong> — clé composée <code>city_name + _id</code> : les chunks de Lyon vivent sur rs0, ceux de Paris sur rs1. La donnée est physiquement proche de sa ville.</li>
+    <li><strong>Analyse</strong> — requêtes mongosh (disponibilité, superhôtes, hôtes multi-annonces…) et exploration avec Polars.</li>
+    <li><strong>Restitution BI</strong> — chaîne complète ODBC → BI Connector (mongosqld) → Power BI, le proxy SQL qui permet à un outil BI classique de lire du NoSQL.</li>
+  </ul>
+
+  <h2>Ce que j'en retiens</h2>
+  <p>Le choix de la shard key est une décision d'architecture, pas un détail de configuration : sharder par ville rend les requêtes géographiques rapides et la localisation des données explicite, mais engage la structure du cluster pour de bon. C'est le genre de décision qu'il faut savoir justifier — et j'ai appris à le faire sur ce projet.</p>
+  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-MongoDB-ReplicaSet-Polars" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+</article>
+
+<article class="case" id="case-ml">
+  <a class="back" href="#projets" onclick="goHome()">← retour aux projets</a>
+  <div class="eyebrow">run #09 · machine learning</div>
+  <h1>Prédiction de consommation énergétique des bâtiments</h1>
+  <div class="meta"><span class="tag">Scikit-learn</span><span class="tag">BentoML</span><span class="tag">Pandas</span><span class="tag">Poetry</span></div>
+
+  <h2>Le problème</h2>
+  <p>La ville de Seattle publie chaque année les données de consommation énergétique de ses bâtiments commerciaux. L'objectif : prédire la consommation réelle d'un bâtiment (<code>SiteEnergyUseWN</code>, en kBtu) à partir de ses seules caractéristiques structurelles, pour anticiper les besoins et identifier les bâtiments énergivores — puis rendre ce modèle utilisable par n'importe quelle application via une API.</p>
+
+  <h2>La démarche</h2>
+  <ul>
+    <li><strong>EDA</strong> — exploration des distributions de consommation, identification des valeurs aberrantes et des corrélations clés.</li>
+    <li><strong>Feature engineering</strong> — 9 variables retenues : type de propriété, quartier, nombre de bâtiments et d'étages, surface, sources d'énergie utilisées (vapeur, électricité, gaz) et âge du bâtiment.</li>
+    <li><strong>Modélisation</strong> — comparaison de plusieurs algorithmes en validation croisée ; Random Forest Regressor retenu.</li>
+    <li><strong>Serving</strong> — export du modèle dans le store BentoML et exposition via une API REST avec interface Swagger pour tester les prédictions.</li>
+  </ul>
+
+  <div class="kpi">
+    <div><b>0,82</b><span>R² (validation croisée)</span></div>
+    <div><b>9</b><span>features retenues</span></div>
+    <div><b>REST</b><span>API BentoML + Swagger</span></div>
+  </div>
+
+  <h2>Ce que j'en retiens</h2>
+  <p>La valeur d'un modèle ne se mesure pas qu'à son R² : un modèle à 0,82 accessible via une API documentée est plus utile qu'un modèle à 0,85 enfermé dans un notebook. Ce projet m'a fait passer du réflexe « notebook » au réflexe « produit » — c'est exactement la frontière entre data science et data engineering.</p>
+  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-ML-Conso-Bat" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+</article>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 [Prénom NOM] — Data Engineer</span>
+    <span><a href="https://github.com/nigeldellamore66-crypto">GitHub</a> · <a href="[lien LinkedIn]">LinkedIn</a> · <a href="mailto:[email]">[email]</a></span>
+  </div>
+</footer>
+
+<script>
+const home = document.getElementById('view-home');
+const cases = document.querySelectorAll('.case');
+function openCase(id){
+  home.style.display = 'none';
+  cases.forEach(c => c.classList.remove('active'));
+  document.getElementById('case-' + id).classList.add('active');
+  window.scrollTo({top:0, behavior:'instant'});
+  history.replaceState(null,'','#p-'+id);
+}
+function goHome(){
+  cases.forEach(c => c.classList.remove('active'));
+  home.style.display = 'block';
+}
+// deep link : ouvrir directement une étude de cas via #p-xxx
+window.addEventListener('DOMContentLoaded', () => {
+  const h = location.hash;
+  if (h.startsWith('#p-')) openCase(h.slice(3));
+});
+</script>
+</body>
+</html>
