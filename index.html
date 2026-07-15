@@ -133,7 +133,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
       <p class="lede">Je suis Nigel Dellamore, Data Engineer. Je conçois des pipelines de données de bout en bout — ingestion, CDC et streaming, lakehouse, orchestration, jusqu'aux systèmes RAG — avec un soin particulier pour la qualité des données, les tests, le monitoring et la conteneurisation. Formé au métier via un cursus intensif de Data Engineering (Expert en ingénierie et science des données - code NSF 326 - Diplôme de niveau 7), projets à l'appui ci-dessous.</p>
       <div class="hero-links">
         <a class="btn primary" href="#projets">Voir les projets</a>
-        <a class="btn" href="https://github.com/nigeldellamore66-crypto" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://github.com/nigeldellamore" target="_blank" rel="noopener">GitHub</a>
         <a class="btn" href="https://www.linkedin.com/in/nigel-dellamore-742814293" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </section>
@@ -290,7 +290,7 @@ Monitoring    : Prometheus + Grafana</pre>
 
   <h2>Ce que j'en retiens</h2>
   <p>C'est le projet qui assemble tout : capture, streaming, lakehouse, orchestration, qualité, monitoring, restitution. La leçon principale est architecturale — séparer la source de vérité (Delta, historisée) de la couche de service (Postgres, dernier état) clarifie les responsabilités et évite qu'un besoin BI ne dicte la structure du lakehouse. Et l'idempotence n'est pas un luxe : c'est ce qui permet de relancer un pipeline un dimanche soir sans transpirer.</p>
-  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-Infrastructure-Sport" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+  <p><a href="https://github.com/nigeldellamore/OPC-Infrastructure-Sport" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
 <article class="case" id="case-ragmvp">
@@ -346,7 +346,7 @@ Monitoring SQLite + feedback utilisateur (dashboard dédié)</pre>
 
   <h2>Ce que j'en retiens</h2>
   <p>La différence entre un POC et un MVP n'est pas la quantité de features, c'est la mesure. Mettre en place RAGAS d'abord, puis architecturer pour faire monter les métriques, transforme des choix techniques (« filtres natifs ou post-traitement ? ») en décisions objectivables. Documenter les limites restantes fait aussi partie du travail : un MVP honnête vaut mieux qu'une démo qui promet trop.</p>
-  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-MVP-RAG" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+  <p><a href="https://github.com/nigeldellamore/OPC-MVP-RAG" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
 <article class="case" id="case-ragpoc">
@@ -376,7 +376,7 @@ Monitoring SQLite + feedback utilisateur (dashboard dédié)</pre>
 
   <h2>Ce que j'en retiens</h2>
   <p>Un bon POC ne sert pas à impressionner, il sert à apprendre : sa vraie livraison, ce sont les limites identifiées et le protocole d'évaluation. Avoir mis RAGAS en place dès cette phase a permis, au moment du MVP, de prouver chiffres à l'appui que les choix d'architecture amélioraient réellement le système.</p>
-  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-RAG-System" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+  <p><a href="https://github.com/nigeldellamore/OPC-RAG-System" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
 <article class="case" id="case-meteo">
@@ -422,7 +422,7 @@ Stations météo (InfoClimat / Weather Underground)
 
   <h2>Ce que j'en retiens</h2>
   <p>La vraie difficulté d'un pipeline multi-sources n'est pas technique, elle est sémantique : trois stations qui mesurent « le vent » ne mesurent pas la même chose dans les mêmes unités. Définir un schéma cible unique tôt dans le projet, et valider les données contre ce schéma avant <em>et</em> après transformation, m'a évité de découvrir les incohérences au moment de l'analyse — c'est-à-dire trop tard.</p>
-  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-Pipeline-ETL-meteo" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+  <p><a href="https://github.com/nigeldellamore/OPC-Pipeline-ETL-meteo" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
 <article class="case" id="case-kestra">
@@ -448,7 +448,7 @@ Stations météo (InfoClimat / Weather Underground)
 
   <h2>Ce que j'en retiens</h2>
   <p>Les tests de validation intermédiaires entre les tâches du flux sont ce qui distingue un script automatisé d'un pipeline fiable : une erreur détectée à l'étape de dédoublonnage coûte quelques secondes ; la même erreur découverte dans le rapport final envoyé aux équipes coûte la confiance dans tout le pipeline.</p>
-  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-Orchestration-Flux-Kestra-Python-DuckDB" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+  <p><a href="https://github.com/nigeldellamore/OPC-Orchestration-Flux-Kestra-Python-DuckDB" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
 <article class="case" id="case-streaming">
@@ -482,7 +482,7 @@ Stations météo (InfoClimat / Weather Underground)
 
   <h2>Ce que j'en retiens</h2>
   <p>En streaming, la question n'est pas « est-ce que ça marche ? » mais « qu'est-ce qui se passe quand ça s'arrête ? ». Comprendre concrètement le rôle des checkpoints — et le vérifier en tuant le consommateur en pleine exécution — m'a appris plus sur les garanties de livraison que n'importe quelle documentation.</p>
-  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-redpanda-spark-ticket" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+  <p><a href="https://github.com/nigeldellamore/OPC-redpanda-spark-ticket" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
 <article class="case" id="case-sante">
@@ -513,7 +513,7 @@ docker-compose.yml
 
   <h2>Ce que j'en retiens</h2>
   <p>Sur des données sensibles, la sécurité n'est pas une couche qu'on ajoute à la fin : la séparation des rôles utilisateurs et l'isolation des environnements de test doivent être présentes dès le premier <code>docker compose up</code>. C'est aussi le projet qui m'a appris à concevoir pour la réutilisabilité — le pipeline a été pensé comme un outil, pas comme un script jetable.</p>
-  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-Migration-MongoDB" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+  <p><a href="https://github.com/nigeldellamore/OPC-Migration-MongoDB" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
 <article class="case" id="case-sharding">
@@ -555,7 +555,7 @@ docker-compose.yml
 
   <h2>Ce que j'en retiens</h2>
   <p>Le choix de la shard key est une décision d'architecture, pas un détail de configuration : sharder par ville rend les requêtes géographiques rapides et la localisation des données explicite, mais engage la structure du cluster pour de bon. C'est le genre de décision qu'il faut savoir justifier — et j'ai appris à le faire sur ce projet.</p>
-  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-MongoDB-ReplicaSet-Polars" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+  <p><a href="https://github.com/nigeldellamore/OPC-MongoDB-ReplicaSet-Polars" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
 <article class="case" id="case-ml">
@@ -583,7 +583,7 @@ docker-compose.yml
 
   <h2>Ce que j'en retiens</h2>
   <p>La valeur d'un modèle ne se mesure pas qu'à son R² : un modèle à 0,82 accessible via une API documentée est plus utile qu'un modèle à 0,85 enfermé dans un notebook. Ce projet m'a fait passer du réflexe « notebook » au réflexe « produit » — c'est exactement la frontière entre data science et data engineering.</p>
-  <p><a href="https://github.com/nigeldellamore66-crypto/OPC-ML-Conso-Bat" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
+  <p><a href="https://github.com/nigeldellamore/OPC-ML-Conso-Bat" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
 </div>
@@ -591,7 +591,7 @@ docker-compose.yml
 <footer>
   <div class="wrap">
     <span>© 2026 Nigel Dellamore — Data Engineer</span>
-    <span><a href="https://github.com/nigeldellamore66-crypto">GitHub</a> · <a href="https://www.linkedin.com/in/nigel-dellamore-742814293">LinkedIn</a> · <a href="mailto:nigel.dellamore66@gmail.com">nigel.dellamore66@gmail.com</a></span>
+    <span><a href="https://github.com/nigeldellamore">GitHub</a> · <a href="https://www.linkedin.com/in/nigel-dellamore-742814293">LinkedIn</a> · <a href="mailto:nigel.dellamore66@gmail.com">nigel.dellamore66@gmail.com</a></span>
   </div>
 </footer>
 
