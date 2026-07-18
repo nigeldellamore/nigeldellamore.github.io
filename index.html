@@ -395,7 +395,7 @@ Monitoring SQLite + feedback utilisateur (dashboard dédié)</pre>
   </ul>
 
   <h2>Ce que j'en retiens</h2>
-  <p>La différence entre un POC et un MVP n'est pas la quantité de features, c'est la mesure. Mettre en place RAGAS d'abord, puis architecturer pour faire monter les métriques, transforme des choix techniques (« filtres natifs ou post-traitement ? ») en décisions objectivables. Documenter les limites restantes fait aussi partie du travail : un MVP honnête vaut mieux qu'une démo qui promet trop.</p>
+  <p>J'ai compris qu'un embedding ne sait pas filtrer. Il rapproche des textes qui parlent de dates ou de lieux, mais il ne fait pas le tri entre un concert de samedi prochain et un concert de l'an dernier. Qdrant règle ça en appliquant les filtres de date et de lieu avant la recherche vectorielle, là où je bricolais en Python.</p>
   <p><a href="https://github.com/nigeldellamore/OPC-MVP-RAG" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
@@ -632,7 +632,7 @@ docker-compose.yml
   </div>
 
   <h2>Ce que j'en retiens</h2>
-  <p>La valeur d'un modèle ne se mesure pas qu'à son R² : un modèle à 0,82 accessible via une API documentée est plus utile qu'un modèle à 0,85 enfermé dans un notebook. Ce projet m'a fait passer du réflexe « notebook » au réflexe « produit » — c'est exactement la frontière entre data science et data engineering.</p>
+  <p>J'ai passé bien plus de temps sur la préparation des variables que sur le choix de l'algorithme — et c'est là que les gains se sont joués. Retenir 9 features structurelles pertinentes (surface, âge, sources d'énergie, quartier) a davantage fait bouger le R² que n'importe quel réglage d'hyperparamètres. Un bon modèle sur des variables mal pensées reste un mauvais modèle.</p>
   <p><a href="https://github.com/nigeldellamore/OPC-ML-Conso-Bat" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
