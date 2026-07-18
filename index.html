@@ -531,7 +531,7 @@ Stations météo (InfoClimat / Weather Underground)
   <p>Une démonstration vidéo du pipeline en fonctionnement est disponible : <a href="https://youtu.be/YojvKA2PAgw" target="_blank" rel="noopener">voir la démo</a>.</p>
 
   <h2>Ce que j'en retiens</h2>
-  <p>En streaming, la question n'est pas « est-ce que ça marche ? » mais « qu'est-ce qui se passe quand ça s'arrête ? ». Comprendre concrètement le rôle des checkpoints — et le vérifier en tuant le consommateur en pleine exécution — m'a appris plus sur les garanties de livraison que n'importe quelle documentation.</p>
+  <p>La leçon la plus utile n'est pas technique mais architecturale : le streaming sert à ingérer et enrichir au fil de l'eau, pas à analyser. Séparer le job d'ingestion du job d'agrégation Parquet m'a montré que ces deux mondes se complètent au lieu de se concurrencer — c'est le pattern que j'ai retrouvé ensuite dans mon projet Sport Data.</p>
   <p><a href="https://github.com/nigeldellamore/OPC-redpanda-spark-ticket" target="_blank" rel="noopener">→ Voir le code sur GitHub</a></p>
 </article>
 
