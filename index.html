@@ -380,7 +380,7 @@ Monitoring SQLite + feedback utilisateur (dashboard dédié)</pre>
   <p>Dans le POC, le filtrage par date se faisait en Python, en amont de la recherche vectorielle — fragile et coûteux. Dans le MVP, les filtres temporels et géographiques sont exécutés <em>nativement par Qdrant, avant la recherche vectorielle</em>. Le retriever ne voit que des candidats déjà pertinents, ce qui explique en grande partie le bond des métriques.</p>
 
   <div class="kpi">
-    <div><b>0,41 → 0,79</b><span>faithfulness (RAGAS)</span></div>
+    <div><b>0,41 → 0,84</b><span>faithfulness (RAGAS)</span></div>
     <div><b>0,14 → 0,80</b><span>context recall</span></div>
     <div><b>0,32 → 0,57</b><span>answer correctness</span></div>
   </div>
